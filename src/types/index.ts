@@ -17,3 +17,7 @@ export type FormSchemaType = {
     properties: Record<string, FormProperty>;
     required?: string[];
 }
+
+export type ParsedFormProperty = FormProperty & {
+    name: string;
+}

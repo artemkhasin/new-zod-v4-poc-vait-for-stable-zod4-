@@ -1,11 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import type { FormProperty } from "../../types";
+import type { ParsedFormProperty, FormSchemaType } from "../../types";
 
 interface IGeneralFormProps {
     formZodSchema: z.ZodObject<z.ZodRawShape>;
-    formConfig: z.core.JSONSchema.BaseSchema;
+    formConfig: FormSchemaType;
 }
 
 const GeneralForm = (props: IGeneralFormProps) => {
@@ -14,9 +14,14 @@ const GeneralForm = (props: IGeneralFormProps) => {
         resolver: zodResolver(formZodSchema),
         defaultValues: {}
     });
-    console.log('Form Config JSON #$#%$:', JSON.stringify(formConfig, null, 2))
+    const theForm: ParsedFormProperty[] = Object.entries(formConfig.properties).map(
+        ([name, property]) => ({
+            ...property,
+            name
+        })
+    );
 
-    const theForm: Record<string, FormProperty> = formConfig.properties as Record<string, FormProperty>;
+    
 
     console.log('Form Config JSON:', theForm)
     return (

@@ -5,6 +5,8 @@ import { myZodSampleSchema, myFormConfig } from './schemas'
 function App() {
   // const defaultValues = {};
 
+  const formConfigParsed = JSON.parse(JSON.stringify(myFormConfig));
+
   return (
     <>
       <div>
@@ -12,7 +14,7 @@ function App() {
         <p>Check the console for the form config JSON.</p>
         <GeneralForm
           formZodSchema={myZodSampleSchema}
-          formConfig={myFormConfig}
+          formConfig={formConfigParsed}
           // defaultValues={defaultValues}
         />
       </div>
