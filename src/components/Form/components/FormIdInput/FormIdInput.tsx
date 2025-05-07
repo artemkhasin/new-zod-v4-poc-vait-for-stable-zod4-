@@ -20,12 +20,9 @@ const FormIdInput = ({ name, label, description }: FormIdInputProps) => {
           label={label}
           fullWidth
           margin="normal"
-          error={!!errors[name]}
-          helperText={errors[name] ? String(errors[name]?.message) : description}
+          error={!!errors[field.name]}
+          helperText={errors[field.name] ? String(errors[field.name]?.message) : description}
           variant="outlined"
-          InputProps={{
-            sx: { fontFamily: 'monospace' }
-          }}
         />
       )}
     />
@@ -33,3 +30,4 @@ const FormIdInput = ({ name, label, description }: FormIdInputProps) => {
 };
 
 export default FormIdInput;
+

@@ -16,6 +16,8 @@ import {
   FormSwitch,
 } from "./components";
 
+import { useEffect } from "react";
+
 interface IGeneralFormProps {
     formZodSchema: z.ZodObject<z.ZodRawShape>;
     formConfig: FormSchemaType;
@@ -36,6 +38,49 @@ const GeneralForm = (props: IGeneralFormProps) => {
             name
         })
     );
+
+    // DEBUGGING: Manually test the resolver
+    useEffect(() => {
+        if (!formZodSchema) return;
+
+        const testValidation = async () => {
+            // Simulate form data that you know will fail based on your ZodError.issues
+            const testData = {
+                id: "!", // Invalid: "ID can only contain letters, numbers, dashes and underscores"
+                code: "",  // Invalid: "Code is required" (too_small, minimum 5)
+                description: "", // Invalid: "Description is required" (too_small, minimum 1)
+                createdAt: "invalid-date-string", // Invalid: "Created At must be a valid date"
+                dataType: null, // Invalid: "Invalid input" (assuming this maps to a field expecting a specific type)
+                // Add other fields from your schema, possibly with valid default values
+                // if they are not part of the errors you're testing, to ensure the
+                // overall object shape matches formZodSchema.
+            };
+
+            console.log("Manually testing resolver with data:", testData);
+            try {
+                // The resolver function itself is what zodResolver(formZodSchema) returns.
+                // It expects (values, context, options)
+                const resolverFn = zodResolver(formZodSchema);
+                const resolverResult = await resolverFn(
+                    testData, 
+                    {}, // context (can usually be empty for Zod)
+                    { criteriaMode: "all", fields: {}, names: [] } // options
+                );
+                console.log('Manual Resolver Result:', resolverResult);
+                // Expected: resolverResult.errors should be populated, e.g.,
+                // { id: { type: 'invalid_format', message: '...' }, code: { type: 'too_small', message: '...' } ... }
+            } catch (e) {
+                console.error('Error manually calling resolver:', e);
+            }
+        };
+
+        testValidation();
+    }, [formZodSchema]); // Re-run if schema changes (or just once on mount for testing)
+
+
+    const { handleSubmit, formState: { errors } } = methods;
+
+    console.log('Form Errors:', errors);
 
     const renderInputField = (field: ParsedFormProperty) => {
         switch (field.inputType) {
@@ -79,15 +124,20 @@ const GeneralForm = (props: IGeneralFormProps) => {
         }
     };
 
-    const handleSubmit = methods.handleSubmit((data) => {
-        console.log('Form submitted with data:', data);
-    });
+    const onSubmit = handleSubmit(
+        (data) => {
+            console.log('Form submitted with data:', data);
+        },
+        (validationErrors) => {
+            console.error('Validation Errors:', validationErrors);
+        }
+    );
 
     console.log('Form Config Array:', theFormArray);
     
     return (
         <FormProvider {...methods}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
                 <Stack spacing={2}>
                     {theFormArray.map((field) => (
                         <div key={field.name}>
