@@ -14,6 +14,7 @@ export type FormProperty = {
     items?: {
         type: string;
     };
+    anyOf?: [FormProperty, { type: null }];
 }
 
 export type FormSchemaType = {

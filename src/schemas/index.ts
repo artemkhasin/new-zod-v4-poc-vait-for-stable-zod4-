@@ -26,12 +26,12 @@ export const myZodSampleSchema = z.object({
             inputType: 'FormTagsInput',
         }).optional(),
     createdAt: z.string().refine(dateString => !isNaN(Date.parse(dateString)), {
-            message: 'Created At must be a valid date',
+            error: 'Created At must be a valid date',
         }).meta({
             label: 'Created At',
             description: 'Date when the user was created',
             inputType: 'FormDateInput',
-        }).optional(),
+        }).optional().nullable(),
     dataType: z.string()
         .refine((val): val is z.infer<typeof dataTypeEnum> => Object.values(dataTypeEnum.enum).includes(val as z.infer<typeof dataTypeEnum>))
         .meta({
@@ -42,7 +42,7 @@ export const myZodSampleSchema = z.object({
                 label: value.charAt(0).toUpperCase() + value.slice(1),
                 value,
             })),
-        }).optional(),
+        }).optional(), 
 }).meta({
     label: 'User',
     description: 'User information schema',
