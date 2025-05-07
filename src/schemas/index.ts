@@ -1,11 +1,15 @@
 import { z } from 'zod';
 
+const dataTypeEnum = z.enum(['STRING', 'NUMBER', 'BOOLEAN']);
+
 export const myZodSampleSchema = z.object({
-    id: z.string().min(2, 'ID is required').max(10, 'ID must be at most 10 characters long').meta({
-            label: 'ID',
-            description: 'Unique identifier for the user',
-            inputType: 'FormIdInput',
-        }),
+    id: z.string().min(2, 'ID is required').max(10, 'ID must be at most 10 characters long')
+            .regex(/^[a-zA-Z0-9_-]+$/, 'ID can only contain letters, numbers, dashes and underscores')
+            .meta({
+                label: 'ID',
+                description: 'Unique identifier for the user',
+                inputType: 'FormIdInput',
+            }),
     code: z.string().min(5, 'Code is required').max(10, 'Code must be at most 10 characters long').meta({
             label: 'Code',
             description: 'Unique code for the user',
@@ -28,9 +32,28 @@ export const myZodSampleSchema = z.object({
             description: 'Date when the user was created',
             inputType: 'FormDateInput',
         }).optional(),
+    dataType: z.string()
+        .refine((val): val is z.infer<typeof dataTypeEnum> => Object.values(dataTypeEnum.enum).includes(val as z.infer<typeof dataTypeEnum>))
+        .meta({
+            label: 'Data Type',
+            description: 'Data types associated with the user',
+            inputType: 'FormDataTypeSelect',
+            options: Object.values(dataTypeEnum.enum).map((value) => ({
+                label: value.charAt(0).toUpperCase() + value.slice(1),
+                value,
+            })),
+        }).optional(),
 }).meta({
     label: 'User',
     description: 'User information schema',
+    defaultValues: {
+        id: '',
+        code: '',
+        description: '',
+        tags: [],
+        createdAt: '',
+        dataType: '',
+    },
 });
 
 export const myFormConfig = z.toJSONSchema(myZodSampleSchema)
