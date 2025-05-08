@@ -1,0 +1,88 @@
+{
+    "label": "User",
+    "description": "User information schema",
+    "defaultValues": {
+        "id": "",
+        "code": "",
+        "description": "",
+        "tags": [],
+        "createdAt": "",
+        "dataType": ""
+    },
+    "type": "object",
+    "properties": {
+        "id": {
+            "label": "ID",
+            "description": "Unique identifier for the user",
+            "inputType": "FormIdInput",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 10,
+            "format": "regex",
+            "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "code": {
+            "label": "Code",
+            "description": "Unique code for the user",
+            "inputType": "FormInput",
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 10
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description of the user",
+            "inputType": "FormTextArea",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+        },
+        "tags": {
+            "label": "Tags",
+            "description": "Tags associated with the user",
+            "inputType": "FormTagsInput",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "createdAt": {
+            "anyOf": [
+                {
+                    "label": "Created At",
+                    "description": "Date when the user was created",
+                    "inputType": "FormDateInput",
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "dataType": {
+            "label": "Data Type",
+            "description": "Data types associated with the user",
+            "inputType": "FormDataTypeSelect",
+            "options": [
+                {
+                    "label": "STRING",
+                    "value": "STRING"
+                },
+                {
+                    "label": "NUMBER",
+                    "value": "NUMBER"
+                },
+                {
+                    "label": "BOOLEAN",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "code",
+        "description"
+    ]
+}

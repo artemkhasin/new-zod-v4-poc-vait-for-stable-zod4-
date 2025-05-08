@@ -6,7 +6,8 @@ function App() {
   // const defaultValues = {};
 
   const formConfigParsed = JSON.parse(JSON.stringify(myFormConfig));
-  // console.log('Parsed Form Config:', formConfigParsed);
+  console.log('Parsed Form Config:', formConfigParsed);
+  console.log('jsonSchema:', myFormConfig);
 
   return (
     <>

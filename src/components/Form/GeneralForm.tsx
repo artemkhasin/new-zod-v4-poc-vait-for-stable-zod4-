@@ -34,7 +34,7 @@ const GeneralForm = (props: IGeneralFormProps) => {
     console.log('prpperties:', formConfig.properties);
 
     // convert formConfig to an array of properties
-    // anyOf is a special case, if it exists, we need to use the first value
+    // * anyOf * is a special case, if it exists, we need to use the first value
     // it happens when the field is nullable in schema
     const theFormArray: ParsedFormProperty[] = Object.entries(formConfig.properties).map(
         ([name, property]) => {
