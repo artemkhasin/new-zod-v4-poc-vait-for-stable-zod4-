@@ -26,8 +26,8 @@ export const myZodSampleSchema = z.object({
             inputType: 'FormTagsInput',
         }).optional(),
     isActive: z.boolean().meta({
-            label: 'Is Active',
-            description: 'Is the user active?',
+            label: 'Active Status',
+            description: 'Indicates whether the user is currently active',
             inputType: 'FormSwitch',
         }).optional(),
     createdAt: z.string().refine(dateString => !isNaN(Date.parse(dateString)), {
@@ -58,6 +58,7 @@ export const myZodSampleSchema = z.object({
         tags: [],
         createdAt: null,
         dataType: null,
+        isActive: false, // Default value indicating the user is inactive
     },
 });
 
