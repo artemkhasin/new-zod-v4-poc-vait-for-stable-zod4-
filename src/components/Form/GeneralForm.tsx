@@ -26,13 +26,15 @@ const GeneralForm = (props: IGeneralFormProps) => {
     const { formReadySchema: schema } = useFormReadySchema(formConfig.properties, formConfig.required);
 
     const { 
-        handleSubmit,  
+        handleSubmit,
+        reset  
     } = methods;
 
 
     const onSubmit = handleSubmit(
         (data) => {
             console.log('Form submitted with data:', data);
+            reset();
         },
         (validationErrors) => {
             console.error('Validation Errors:', validationErrors);
