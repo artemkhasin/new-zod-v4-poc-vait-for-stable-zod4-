@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-const dataTypeEnum = z.enum(['STRING', 'NUMBER', 'BOOLEAN']);
-
 export const myZodSampleSchema = z.object({
     id: z.string().min(2, 'ID is required').max(10, 'ID must be at most 10 characters long')
             .regex(/^[a-zA-Z0-9_-]+$/, 'ID can only contain letters, numbers, dashes and underscores')
@@ -37,17 +35,33 @@ export const myZodSampleSchema = z.object({
             description: 'Date when the user was created',
             inputType: 'FormDateInput',
         }).optional().nullable(),
-    dataType: z.string()
-        .refine((val): val is z.infer<typeof dataTypeEnum> => Object.values(dataTypeEnum.enum).includes(val as z.infer<typeof dataTypeEnum>))
+    dataType: z.enum(['STRING', 'NUMBER', 'BOOLEAN'])
         .meta({
             label: 'Data Type',
             description: 'Data types associated with the user',
             inputType: 'FormDataTypeSelect',
-            options: Object.values(dataTypeEnum.enum).map((value) => ({
-                label: value.charAt(0).toUpperCase() + value.slice(1),
-                value,
-            })),
+            options: [
+                { label: 'STRING', value: 'STRING' },
+                { label: 'NUMBER', value: 'NUMBER' },
+                { label: 'BOOLEAN', value: 'BOOLEAN' },
+            ],
+        }).optional().nullable(),
+    settings: z.object({
+        theme: z.enum(['light', 'dark']).meta({
+            label: 'Theme',
+            description: 'User interface theme preference',
+            inputType: 'FormSelect',
+            options: [
+                { label: 'Light', value: 'light' },
+                { label: 'Dark', value: 'dark' },
+            ],
+        }).optional().nullable(),
+        notifications: z.boolean().meta({
+            label: 'Notifications',
+            description: 'Enable or disable notifications',
+            inputType: 'FormCheckbox',
         }).optional().nullable(), 
+    }).optional(),
 }).meta({
     label: 'User',
     description: 'User information schema',
@@ -59,6 +73,10 @@ export const myZodSampleSchema = z.object({
         createdAt: null,
         dataType: null,
         isActive: false, // Default value indicating the user is inactive
+        settings: {
+            theme: null,
+            notifications: false, // Default value indicating notifications are disabled
+        },
     },
 });
 

@@ -5,7 +5,7 @@ export type FormSelectorOptionsType = {
 
 export type FormProperty = {
     label: string;
-    description: string;
+    description?: string;
     inputType: string
     type: 'string' | 'array' | 'number' | 'boolean' | 'object';
     options?: FormSelectorOptionsType[] | [];
@@ -16,6 +16,7 @@ export type FormProperty = {
         type: string;
     };
     anyOf?: [FormProperty, { type: null }];
+    properties?: Record<string, FormProperty>;
 }
 
 export type FormSchemaType = {
@@ -42,7 +43,8 @@ export const FormInputTypesList = {
     FormCheckbox: 'FormCheckbox',
     FormRadio: 'FormRadio',
     FormSwitch: 'FormSwitch',
-    FormFile: 'FormFile'
+    FormFile: 'FormFile',
+    FormDivider: 'FormDivider',
 } as const;
 
 // For type usage:

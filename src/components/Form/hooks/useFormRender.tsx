@@ -53,6 +53,8 @@ export const useFormRender = () => {
                 />;
             case FormInputTypesList.FormSwitch:
                 return <FormSwitch name={field.name} label={field.label} description={field.description} />;
+            case FormInputTypesList.FormDivider:
+                return <div style={{ borderBottom: '1px solid #ccc', margin: '16px 0' }} />;
             default:
                 return null;
         }
