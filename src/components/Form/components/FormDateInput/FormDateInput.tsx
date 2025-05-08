@@ -17,6 +17,8 @@ const FormDateInput = ({ name, label, description }: FormDateInputProps) => {
       render={({ field }) => (
         <TextField
           {...field}
+          value={field.value ?? ""} // Convert null to an empty string
+          onChange={(e) => field.onChange(e.target.value || null)} // Convert empty string back to null
           label={label}
           type="date"
           fullWidth

@@ -47,7 +47,7 @@ export const myZodSampleSchema = z.object({
                 label: value.charAt(0).toUpperCase() + value.slice(1),
                 value,
             })),
-        }).optional(), 
+        }).optional().nullable(), 
 }).meta({
     label: 'User',
     description: 'User information schema',
@@ -56,8 +56,8 @@ export const myZodSampleSchema = z.object({
         code: '',
         description: '',
         tags: [],
-        createdAt: '',
-        dataType: '',
+        createdAt: null,
+        dataType: null,
     },
 });
 
