@@ -21,7 +21,7 @@ const GeneralForm = (props: IGeneralFormProps) => {
         mode: "onBlur",
     });
     const { renderInputField } = useFormRender()
-    const { formReadySchema: schema } = useFormReadySchema(formConfig.properties);
+    const { formReadySchema: schema } = useFormReadySchema(formConfig.properties, formConfig.required);
 
     const { 
         handleSubmit,  

@@ -6,8 +6,8 @@ function App() {
   // const defaultValues = {};
 
   const formConfigParsed = JSON.parse(JSON.stringify(myFormConfig));
-  console.log('Parsed Form Config:', formConfigParsed);
-  console.log('jsonSchema:', myFormConfig);
+  console.log('%c Parsed Form Config:', 'color: purple; font-weight: bold;', formConfigParsed);
+  console.log('%c jsonSchema:', 'color: red; font-weight: bold;', myFormConfig);
 
   return (
     <>

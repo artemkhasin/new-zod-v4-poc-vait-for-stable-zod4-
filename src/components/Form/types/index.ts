@@ -11,6 +11,7 @@ export type FormProperty = {
     options?: FormSelectorOptionsType[] | [];
     minLength?: number;
     maxLength?: number;
+    required?: boolean;
     items?: {
         type: string;
     };
