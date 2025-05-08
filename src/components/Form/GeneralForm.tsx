@@ -4,18 +4,7 @@ import { zodV4Resolver } from "../../utils/zodV4Resolver"; // Import your custom
 import { z } from "zod";
 import { Button, Stack } from "@mui/material";
 import type { ParsedFormProperty, FormSchemaType } from "./types";
-import {
-  FormInput,
-  FormIdInput,
-  FormTextArea,
-  FormDateInput,
-  FormTagsInput,
-  FormDataTypeSelect,
-  FormSelect,
-  FormCheckbox,
-  FormRadio,
-  FormSwitch,
-} from "./components";
+import { useFormRender } from "./hooks/useFormRender";
 
 interface IGeneralFormProps {
     formZodSchema: z.ZodObject<z.ZodRawShape>;
@@ -30,6 +19,7 @@ const GeneralForm = (props: IGeneralFormProps) => {
         defaultValues: formConfig.defaultValues,
         mode: "onBlur",
     });
+    const { renderInputField } = useFormRender()
 
     console.log('prpperties:', formConfig.properties);
 
@@ -59,48 +49,6 @@ const GeneralForm = (props: IGeneralFormProps) => {
     } = methods;
 
     // console.log('Form Errors:', errors);
-
-    const renderInputField = (field: ParsedFormProperty) => {
-        switch (field.inputType) {
-            case 'FormInput':
-                return <FormInput name={field.name} label={field.label} description={field.description} />;
-            case 'FormIdInput':
-                return <FormIdInput name={field.name} label={field.label} description={field.description} />;
-            case 'FormTextArea':
-                return <FormTextArea name={field.name} label={field.label} description={field.description} />;
-            case 'FormDateInput':
-                return <FormDateInput name={field.name} label={field.label} description={field.description} />;
-            case 'FormTagsInput':
-                return <FormTagsInput name={field.name} label={field.label} description={field.description} />;
-            case 'FormDataTypeSelect':
-                return <FormDataTypeSelect 
-                    name={field.name} 
-                    label={field.label} 
-                    description={field.description} 
-                    options={field.options || []} 
-                />;
-            case 'FormSelect':
-                return <FormSelect 
-                    name={field.name} 
-                    label={field.label} 
-                    description={field.description} 
-                    options={field.options || []} 
-                />;
-            case 'FormCheckbox':
-                return <FormCheckbox name={field.name} label={field.label} description={field.description} />;
-            case 'FormRadio':
-                return <FormRadio 
-                    name={field.name} 
-                    label={field.label} 
-                    description={field.description} 
-                    options={field.options || []} 
-                />;
-            case 'FormSwitch':
-                return <FormSwitch name={field.name} label={field.label} description={field.description} />;
-            default:
-                return null;
-        }
-    };
 
     const onSubmit = handleSubmit(
         (data) => {
