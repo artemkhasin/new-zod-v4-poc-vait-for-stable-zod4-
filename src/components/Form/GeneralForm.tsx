@@ -3,8 +3,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodV4Resolver } from "../../utils/zodV4Resolver"; // Import your custom resolver
 import { z } from "zod";
 import { Button, Stack } from "@mui/material";
-import type { ParsedFormProperty, FormSchemaType } from "./types";
+import type { FormSchemaType } from "./types";
 import { useFormRender } from "./hooks/useFormRender";
+import { useFormReadySchema } from "./hooks/useFormReadySchema";
 
 interface IGeneralFormProps {
     formZodSchema: z.ZodObject<z.ZodRawShape>;
@@ -20,35 +21,12 @@ const GeneralForm = (props: IGeneralFormProps) => {
         mode: "onBlur",
     });
     const { renderInputField } = useFormRender()
-
-    console.log('prpperties:', formConfig.properties);
-
-    // convert formConfig to an array of properties
-    // * anyOf * is a special case, if it exists, we need to use the first value
-    // it happens when the field is nullable in schema
-    const theFormArray: ParsedFormProperty[] = Object.entries(formConfig.properties).map(
-        ([name, property]) => {
-            // If property has anyOf and it's an array, use the first value
-            if (property.anyOf && Array.isArray(property.anyOf) && property.anyOf.length > 0) {
-                return {
-                    ...property,
-                    ...property.anyOf[0],
-                    name
-                };
-            }
-            return {
-                ...property,
-                name
-            };
-        }
-    );
+    const { formReadySchema: schema } = useFormReadySchema(formConfig.properties);
 
     const { 
-        handleSubmit, 
-        // formState: { errors } 
+        handleSubmit,  
     } = methods;
 
-    // console.log('Form Errors:', errors);
 
     const onSubmit = handleSubmit(
         (data) => {
@@ -58,14 +36,12 @@ const GeneralForm = (props: IGeneralFormProps) => {
             console.error('Validation Errors:', validationErrors);
         }
     );
-
-    console.log('Form Config Array:', theFormArray);
     
     return (
         <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
                 <Stack spacing={2}>
-                    {theFormArray.map((field) => (
+                    {schema.map((field) => (
                         <div key={field.name}>
                             {renderInputField(field)}
                         </div>
