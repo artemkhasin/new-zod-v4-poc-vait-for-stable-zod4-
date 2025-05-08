@@ -5,9 +5,11 @@ interface FormIdInputProps {
   name: string;
   label: string;
   description?: string;
+  required?: boolean;
+  
 }
 
-const FormIdInput = ({ name, label, description }: FormIdInputProps) => {
+const FormIdInput = ({ name, label, description, required }: FormIdInputProps) => {
   const { control, formState: { errors } } = useFormContext();
 
   return (
@@ -23,6 +25,7 @@ const FormIdInput = ({ name, label, description }: FormIdInputProps) => {
           error={!!errors[field.name]}
           helperText={errors[field.name] ? String(errors[field.name]?.message) : description}
           variant="outlined"
+          required={required}
         />
       )}
     />

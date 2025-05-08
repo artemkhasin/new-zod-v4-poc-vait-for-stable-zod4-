@@ -6,9 +6,10 @@ interface FormTextAreaProps {
   label: string;
   description?: string;
   rows?: number;
+  required?: boolean;
 }
 
-const FormTextArea = ({ name, label, description, rows = 4 }: FormTextAreaProps) => {
+const FormTextArea = ({ name, label, description, rows = 4, required }: FormTextAreaProps) => {
   const { control, formState: { errors } } = useFormContext();
 
   return (
@@ -26,6 +27,7 @@ const FormTextArea = ({ name, label, description, rows = 4 }: FormTextAreaProps)
           error={!!errors[name]}
           helperText={errors[name] ? String(errors[name]?.message) : description}
           variant="outlined"
+          required={required}
         />
       )}
     />

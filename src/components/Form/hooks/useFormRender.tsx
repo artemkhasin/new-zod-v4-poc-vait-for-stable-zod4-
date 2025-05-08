@@ -19,11 +19,11 @@ export const useFormRender = () => {
     const renderInputField = (field: ParsedFormProperty) => {
         switch (field.inputType) {
             case FormInputTypesList.FormInput:
-                return <FormInput name={field.name} label={field.label} description={field.description} />;
+                return <FormInput name={field.name} label={field.label} description={field.description} required={field.required} />;
             case FormInputTypesList.FormIdInput:
-                return <FormIdInput name={field.name} label={field.label} description={field.description} />;
+                return <FormIdInput name={field.name} label={field.label} description={field.description} required={field.required} />;
             case FormInputTypesList.FormTextArea:
-                return <FormTextArea name={field.name} label={field.label} description={field.description} />;
+                return <FormTextArea name={field.name} label={field.label} description={field.description} required={field.required} />;
             case FormInputTypesList.FormDateInput:
                 return <FormDateInput name={field.name} label={field.label} description={field.description} />;
             case FormInputTypesList.FormTagsInput:
