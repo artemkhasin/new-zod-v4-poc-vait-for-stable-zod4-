@@ -25,6 +25,11 @@ export const myZodSampleSchema = z.object({
             description: 'Tags associated with the user',
             inputType: 'FormTagsInput',
         }).optional(),
+    isActive: z.boolean().meta({
+            label: 'Is Active',
+            description: 'Is the user active?',
+            inputType: 'FormSwitch',
+        }).optional(),
     createdAt: z.string().refine(dateString => !isNaN(Date.parse(dateString)), {
             error: 'Created At must be a valid date',
         }).meta({
