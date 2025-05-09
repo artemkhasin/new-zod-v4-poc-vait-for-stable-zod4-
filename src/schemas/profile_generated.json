@@ -1,0 +1,140 @@
+{
+    "label": "Profile",
+    "description": "Profile information schema",
+    "steps": [
+        "General Info",
+        "Another Step"
+    ],
+    "defaultValues": {
+        "username": "",
+        "email": "",
+        "bio": "",
+        "avatarUrl": null,
+        "birthDate": null,
+        "preferences": {
+            "language": null,
+            "darkMode": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "username": {
+            "label": "Username",
+            "description": "Unique username for the profile",
+            "inputType": "FormInput",
+            "step": 1,
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 15,
+            "format": "regex",
+            "pattern": "^[a-zA-Z0-9_]+$"
+        },
+        "email": {
+            "label": "Email",
+            "description": "Email address associated with the profile",
+            "inputType": "FormInput",
+            "step": 1,
+            "type": "string",
+            "format": "email",
+            "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "bio": {
+            "label": "Bio",
+            "description": "Short biography of the user",
+            "inputType": "FormTextArea",
+            "step": 1,
+            "type": "string",
+            "maxLength": 250
+        },
+        "avatarUrl": {
+            "anyOf": [
+                {
+                    "label": "Avatar URL",
+                    "description": "URL of the profile avatar",
+                    "inputType": "FormInput",
+                    "step": 1,
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "birthDate": {
+            "anyOf": [
+                {
+                    "label": "Birth Date",
+                    "description": "Date of birth of the user",
+                    "inputType": "FormDateInput",
+                    "step": 1,
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "preferences": {
+            "type": "object",
+            "properties": {
+                "language": {
+                    "anyOf": [
+                        {
+                            "label": "Language",
+                            "description": "Preferred language for the profile",
+                            "inputType": "FormSelect",
+                            "step": 2,
+                            "options": [
+                                {
+                                    "label": "English",
+                                    "value": "en"
+                                },
+                                {
+                                    "label": "Spanish",
+                                    "value": "es"
+                                },
+                                {
+                                    "label": "French",
+                                    "value": "fr"
+                                },
+                                {
+                                    "label": "German",
+                                    "value": "de"
+                                }
+                            ],
+                            "enum": [
+                                "en",
+                                "es",
+                                "fr",
+                                "de"
+                            ]
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "darkMode": {
+                    "anyOf": [
+                        {
+                            "label": "Dark Mode",
+                            "description": "Enable or disable dark mode",
+                            "inputType": "FormSwitch",
+                            "step": 2,
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": []
+        }
+    },
+    "required": [
+        "username",
+        "email"
+    ]
+}

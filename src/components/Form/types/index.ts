@@ -17,6 +17,7 @@ export type FormProperty = {
     };
     anyOf?: [FormProperty, { type: null }];
     properties?: Record<string, FormProperty>;
+    step?: number;
 }
 
 export type FormSchemaType = {
@@ -26,6 +27,7 @@ export type FormSchemaType = {
     properties: Record<string, FormProperty>;
     required?: string[];
     defaultValues?: Record<string, unknown>;
+    steps?: string[] | undefined;
 }
 
 export type ParsedFormProperty = FormProperty & {

@@ -6,8 +6,13 @@
         "code": "",
         "description": "",
         "tags": [],
-        "createdAt": "",
-        "dataType": ""
+        "createdAt": null,
+        "dataType": null,
+        "isActive": false,
+        "settings": {
+            "theme": null,
+            "notifications": false
+        }
     },
     "type": "object",
     "properties": {
@@ -46,6 +51,12 @@
                 "type": "string"
             }
         },
+        "isActive": {
+            "label": "Active Status",
+            "description": "Indicates whether the user is currently active",
+            "inputType": "FormSwitch",
+            "type": "boolean"
+        },
         "createdAt": {
             "anyOf": [
                 {
@@ -60,24 +71,80 @@
             ]
         },
         "dataType": {
-            "label": "Data Type",
-            "description": "Data types associated with the user",
-            "inputType": "FormDataTypeSelect",
-            "options": [
+            "anyOf": [
                 {
-                    "label": "STRING",
-                    "value": "STRING"
+                    "label": "Data Type",
+                    "description": "Data types associated with the user",
+                    "inputType": "FormDataTypeSelect",
+                    "options": [
+                        {
+                            "label": "STRING",
+                            "value": "STRING"
+                        },
+                        {
+                            "label": "NUMBER",
+                            "value": "NUMBER"
+                        },
+                        {
+                            "label": "BOOLEAN",
+                            "value": "BOOLEAN"
+                        }
+                    ],
+                    "enum": [
+                        "STRING",
+                        "NUMBER",
+                        "BOOLEAN"
+                    ]
                 },
                 {
-                    "label": "NUMBER",
-                    "value": "NUMBER"
-                },
-                {
-                    "label": "BOOLEAN",
-                    "value": "BOOLEAN"
+                    "type": "null"
                 }
-            ],
-            "type": "string"
+            ]
+        },
+        "settings": {
+            "type": "object",
+            "properties": {
+                "theme": {
+                    "anyOf": [
+                        {
+                            "label": "Theme",
+                            "description": "User interface theme preference",
+                            "inputType": "FormSelect",
+                            "options": [
+                                {
+                                    "label": "Light",
+                                    "value": "light"
+                                },
+                                {
+                                    "label": "Dark",
+                                    "value": "dark"
+                                }
+                            ],
+                            "enum": [
+                                "light",
+                                "dark"
+                            ]
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "notifications": {
+                    "anyOf": [
+                        {
+                            "label": "Notifications",
+                            "description": "Enable or disable notifications",
+                            "inputType": "FormCheckbox",
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": []
         }
     },
     "required": [

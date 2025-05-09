@@ -83,3 +83,83 @@ export const myZodSampleSchema = z.object({
 export const myFormConfig = z.toJSONSchema(myZodSampleSchema)
 
 export type MyFormType = z.infer<typeof myZodSampleSchema>;
+
+
+// -----------------Profiles -----------------
+
+export const profileSchema = z.object({
+    username: z.string().min(3, 'Username is required and must be at least 3 characters long')
+        .max(15, 'Username must be at most 15 characters long')
+        .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores')
+        .meta({
+            label: 'Username',
+            description: 'Unique username for the profile',
+            inputType: 'FormInput',
+            step: 1,
+        }),
+    email: z.string().email('Email must be a valid email address').meta({
+        label: 'Email',
+        description: 'Email address associated with the profile',
+        inputType: 'FormInput',
+        step: 1,
+    }),
+    bio: z.string().max(250, 'Bio must be at most 250 characters long').meta({
+        label: 'Bio',
+        description: 'Short biography of the user',
+        inputType: 'FormTextArea',
+        step: 1,
+    }).optional(),
+    avatarUrl: z.string().url('Avatar URL must be a valid URL').meta({
+        label: 'Avatar URL',
+        description: 'URL of the profile avatar',
+        inputType: 'FormInput',
+        step: 1,
+    }).optional().nullable(),
+    birthDate: z.string().refine(dateString => !isNaN(Date.parse(dateString)), {
+        error: 'Birth Date must be a valid date',
+    }).meta({
+        label: 'Birth Date',
+        description: 'Date of birth of the user',
+        inputType: 'FormDateInput',
+        step: 1,
+    }).optional().nullable(),
+    preferences: z.object({
+        language: z.enum(['en', 'es', 'fr', 'de']).meta({
+            label: 'Language',
+            description: 'Preferred language for the profile',
+            inputType: 'FormSelect',
+            step: 2,
+            options: [
+                { label: 'English', value: 'en' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'French', value: 'fr' },
+                { label: 'German', value: 'de' },
+            ],
+        }).optional().nullable(),
+        darkMode: z.boolean().meta({
+            label: 'Dark Mode',
+            description: 'Enable or disable dark mode',
+            inputType: 'FormSwitch',
+            step: 2,
+        }).optional().nullable(),
+    }).optional(),
+}).meta({
+    label: 'Profile',
+    description: 'Profile information schema',
+    steps: ['General Info', 'Another Step'],
+    defaultValues: {
+        username: '',
+        email: '',
+        bio: '',
+        avatarUrl: null,
+        birthDate: null,
+        preferences: {
+            language: null,
+            darkMode: false, // Default value indicating dark mode is disabled
+        },
+    },
+});
+
+export const profileFormConfig = z.toJSONSchema(profileSchema);
+
+export type ProfileType = z.infer<typeof profileSchema>;
