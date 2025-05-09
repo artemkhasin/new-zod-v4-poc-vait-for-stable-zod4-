@@ -74,7 +74,9 @@ const FormStepper = ({
             )}
             <Box display="flex" flexDirection="column" alignItems="center">
                 <Stack spacing={2} width="100%">
+                    {/* here we insert the form provider with the fields */}
                     {children}
+                    {/* --------------------------------------------- */}
                     <Box display="flex" justifyContent="space-between" width="100%" gap={2}>
                         {steps && steps.length > 0 && activeStep > 0 && (
                             <Button
