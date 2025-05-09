@@ -9,3 +9,4 @@ export { default as FormCheckbox } from './FormCheckbox/FormCheckbox';
 export { default as FormRadio } from './FormRadio/FormRadio';
 export { default as FormSwitch } from './FormSwitch/FormSwitch';
 export { default as FormDivider } from './FormDivider/FormDivider';
+export { default as FormStepper } from './FormStepper/FormStepper';

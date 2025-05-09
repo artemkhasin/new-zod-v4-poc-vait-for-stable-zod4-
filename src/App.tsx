@@ -10,7 +10,7 @@ import {
 import { useState } from 'react'
 
 function App() {
-  const [useProfileSchema, setUseProfileSchema] = useState(true);
+  const [useProfileSchema, setUseProfileSchema] = useState(false);
 
   // ---- Fist Form ----
   console.log('%c jsonSchema USER:', 'color: red; font-weight: bold;', myFormConfig);
