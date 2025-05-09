@@ -8,3 +8,4 @@ export { default as FormSelect } from './FormSelect/FormSelect';
 export { default as FormCheckbox } from './FormCheckbox/FormCheckbox';
 export { default as FormRadio } from './FormRadio/FormRadio';
 export { default as FormSwitch } from './FormSwitch/FormSwitch';
+export { default as FormDivider } from './FormDivider/FormDivider';
